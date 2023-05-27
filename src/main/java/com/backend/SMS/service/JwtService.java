@@ -19,19 +19,20 @@ import java.security.Key;
 @Service
 public class JwtService {
 
-    private static final String SECRET = "472D4B6150645367566B58703273357638792F423F4528482B4D625165546857";
+    private static final String SECRET = 
+        "472D4B6150645367566B58703273357638792F423F4528482B4D625165546857";
     
     public String generateToken(String mobile) throws Exception{
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, mobile);
     }
 
-    private String createToken(Map<String, Object> claims, String userName) {
+    private String createToken(Map<String, Object> claims, String mobile) {
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(userName)
+                .setSubject(mobile)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+1000*60*30))
+                .setExpiration(new Date(System.currentTimeMillis()+2592000000l))
                 .signWith(getKey(), SignatureAlgorithm.HS256).compact();
     }
 
@@ -63,7 +64,6 @@ public class JwtService {
 
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String mobile = extractMobile(token);
-        System.out.println(mobile+" "+ userDetails.getUsername());
         return (mobile.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 

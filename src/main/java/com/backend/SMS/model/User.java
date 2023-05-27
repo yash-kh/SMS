@@ -2,12 +2,16 @@ package com.backend.SMS.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -46,10 +50,16 @@ public class User {
 	
 	private LocalDateTime updatedTs;
 
+	@OneToMany(mappedBy = "user")
+	@JsonIgnore
+	private List<Ticket> tickets;
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", mobile=" + mobile + ", email=" + email + ", role=" + role
-				+ ", birthDate=" + birthDate + ", isVerified=" + isVerified + ", createdTs=" + createdTs
+		return "User [id=" + id + ", name=" + name + ", mobile=" + mobile 
+				+ ", email=" + email + ", role=" + role
+				+ ", birthDate=" + birthDate + ", isVerified=" + isVerified 
+				+ ", createdTs=" + createdTs
 				+ ", updatedTs=" + updatedTs + "]";
 	}
 

@@ -46,7 +46,10 @@ public class UserResource {
 			return new ResponseEntity<>("role is not required",  HttpStatus.BAD_REQUEST);
 		}
 		
-		if(user.getMobile()== null || user.getName() == null || user.getPassword() == null || user.getBirthDate() == null) {
+		if(	user.getMobile() == null 
+			|| user.getName() == null 
+			|| user.getPassword() == null 
+			|| user.getBirthDate() == null) {
 			return new ResponseEntity<>("name, mobile, password, birthDate are required",  HttpStatus.BAD_REQUEST);
 		}
 		

@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import com.backend.SMS.config.UserInfoUserDetails;
 import com.backend.SMS.jpa.UserRepository;
 
-
 @Service
 public class UserService implements UserDetailsService {
 
@@ -27,10 +26,11 @@ public class UserService implements UserDetailsService {
     public void createUser(User user) {
         Optional<User> UserByMobile = userRepository.findByMobile(user.getMobile());
         if (UserByMobile.isPresent()) {
-            throw new RuntimeException("User already registered. Please use different username.");
+            throw new RuntimeException(
+                "User already registered. Please use different username.");
         }
         
-        LocalDateTime createdTime = LocalDateTime.now(  );
+        LocalDateTime createdTime = LocalDateTime.now();
 		user.setCreatedTs(createdTime);
 		user.setUpdatedTs(createdTime);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
